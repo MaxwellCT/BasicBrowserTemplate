@@ -6,6 +6,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +26,18 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = object: WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                url?.let{
+                urlEditText.setText(it)
             }
         }
-
+    }
+        goButton.setOnClickListener {
+            val url = urlEditText.text.toString()
+            if (url.startsWith("http"))
+                url
+            else
+                "http://$url"
+            webView.loadUrl(url)
+        }
     }
 }
